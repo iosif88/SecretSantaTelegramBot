@@ -16,10 +16,20 @@ def register_handlers(bot):
     def create_room(message):
         bot.send_message(message.chat.id, "Напишите уникальное имя для комнаты.")
 
+    @bot.message_handler(func=lambda message: message.text == "Присоединитесь к существующей комнате")
+    def join_room(message):
+        bot.send_message(message.chat.id, "Введите уникальный идентификатор комнаты,к который вы хотите подключиться .")
+
     # Добавьте другие обработчики, как необходимо
+        
+def get_user_id(message):
+    user_telegram_id = message.from_user.id
+    return user_telegram_id
 
 def get_user_info(message):
     user_name = message.from_user.first_name
-    user_telegram_id = message.from_user.id
-    query = f"""INSERT INTO users (first_name, user_telegram_id) VALUES ('{user_name}', {user_telegram_id});"""
+    user_telegram_id = get_user_id(message)
+    query = f"""
+    INSERT INTO users (first_name, user_telegram_id) 
+    VALUES ('{user_name}', {user_telegram_id});"""
     return query
