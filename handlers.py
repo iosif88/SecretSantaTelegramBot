@@ -7,7 +7,7 @@ def register_handlers(bot):
     @bot.message_handler(commands=['start'])
     def start(message):
         query_insert_user = get_user_info(message)
-        execute_query(query_insert_user)
+        execute_query(query_insert_user,message.from_user.id)
 
         markup = create_keyboard_markup()
         bot.send_message(message.chat.id, first_presentation_bot_capabilities, reply_markup=markup)
